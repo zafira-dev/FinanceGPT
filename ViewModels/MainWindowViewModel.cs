@@ -15,7 +15,7 @@ namespace FinanceGPT.ViewModels
 
         public void NavigateTo(string page)
         {
-            CurrentPage = page;
+        //    CurrentPage = page;
         }
     }
 }

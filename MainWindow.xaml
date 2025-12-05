@@ -108,10 +108,11 @@
                                         BorderBrush="#667eea" BorderThickness="2"
                                         Padding="12,8" Margin="0,0,10,0"
                                         FontWeight="SemiBold" Cursor="Hand"/>
-                                <Button Content="+ Add Transaction" 
-                                        Foreground="White"
-                                        Padding="15,10" FontWeight="SemiBold"
-                                        Cursor="Hand">
+                                <Button x:Name="AddTransactionButton" Content="+ Add Transaction" 
+        Click="AddTransactionButton_Click"
+        Foreground="White"
+        Padding="15,10" FontWeight="SemiBold"
+        Cursor="Hand">
                                     <Button.Background>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                             <GradientStop Color="#667eea" Offset="0"/>
@@ -148,9 +149,9 @@
                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
-                                    <TextBlock Text="£4,532.00" FontSize="32" 
+                                    <TextBlock x:Name="TotalBalanceText" Text="£4,532.00" FontSize="32" 
                                               FontWeight="Bold" Foreground="#2d3748"/>
-                                    <TextBlock Text="↑ 12% from last month" FontSize="13" 
+                                    <TextBlock x:Name="BalanceTrendText" Text="↑ 12% from last month" FontSize="13" 
                                               Foreground="#48bb78" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </Border>
@@ -172,7 +173,7 @@
                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
-                                    <TextBlock Text="£1,234.50" FontSize="32" 
+                                    <TextBlock x:Name="MonthlySpendingText" Text="£1,234.50" FontSize="32" 
                                               FontWeight="Bold" Foreground="#2d3748"/>
                                     <TextBlock Text="↓ 8% from last month" FontSize="13" 
                                               Foreground="#f56565" Margin="0,5,0,0"/>
@@ -196,7 +197,7 @@
                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
-                                    <TextBlock Text="£3,200.00" FontSize="32" 
+                                    <TextBlock x:Name="MonthlyIncomeText" Text="£3,200.00" FontSize="32" 
                                               FontWeight="Bold" Foreground="#2d3748"/>
                                     <TextBlock Text="↑ 5% from last month" FontSize="13" 
                                               Foreground="#48bb78" Margin="0,5,0,0"/>
@@ -220,7 +221,7 @@
                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                     </Grid>
-                                    <TextBlock Text="61%" FontSize="32" 
+                                    <TextBlock x:Name="SavingsRateText" Text="61%" FontSize="32" 
                                               FontWeight="Bold" Foreground="#2d3748"/>
                                     <TextBlock Text="↑ 3% from last month" FontSize="13" 
                                               Foreground="#48bb78" Margin="0,5,0,0"/>
@@ -240,7 +241,7 @@
                                 <TextBlock Text="🤖 AI Insight" FontSize="16" 
                                           Foreground="White" FontWeight="Bold" 
                                           Margin="0,0,0,10"/>
-                                <TextBlock Text="You're spending 42% more on dining out compared to last month. Consider meal prepping to save approximately £180/month. Your coffee purchases alone account for £89 this month." 
+                                <TextBlock x:Name="AIInsightText" Text="You're spending 42% more on dining out compared to last month. Consider meal prepping to save approximately £180/month. Your coffee purchases alone account for £89 this month." 
                                           FontSize="14" Foreground="White" 
                                           TextWrapping="Wrap" LineHeight="20"/>
                             </StackPanel>
@@ -321,8 +322,8 @@
                                         CornerRadius="10" BorderThickness="1" 
                                         BorderBrush="#e2e8f0" Padding="15" 
                                         Margin="0,0,0,15">
-                                    <ScrollViewer>
-                                        <StackPanel>
+                                    <ScrollViewer x:Name="ChatMessagesScroll">
+                                        <StackPanel x:Name="ChatMessages">
                                             <!-- User Message -->
                                             <Border Background="#edf2f7" Padding="12,16" 
                                                     CornerRadius="12" Margin="0,0,0,10" 
@@ -349,12 +350,12 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0" 
+                                    <TextBox x:Name="ChatInput" 
                                              Text="Ask anything about your finances..." 
                                              Padding="12,16" FontSize="14" 
                                              BorderThickness="2" BorderBrush="#e2e8f0" 
                                              Margin="0,0,10,0"/>
-                                    <Button Grid.Column="1" Content="Send" 
+                                    <Button x:Name="SendChatButton" Content="Send" 
                                             Foreground="White" 
                                             Padding="20,12" FontWeight="SemiBold" 
                                              Cursor="Hand">
@@ -376,96 +377,13 @@
                                           FontWeight="SemiBold" Foreground="#2d3748" 
                                           Margin="0,0,0,20"/>
 
-                                <!-- Transaction List -->
-                                <StackPanel>
-
-                                    <!-- Starbucks -->
-                                    <Border Padding="15" BorderThickness="0,0,0,1" 
-                                            BorderBrush="#e2e8f0" Cursor="Hand">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Background="#fed7d7" Width="45" 
-                                                        Height="45" CornerRadius="12">
-                                                    <TextBlock Text="☕" FontSize="20" 
-                                                              HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                                </Border>
-                                                <StackPanel Margin="15,0,0,0">
-                                                    <TextBlock Text="Starbucks" FontSize="15" 
-                                                              FontWeight="SemiBold" 
-                                                              Foreground="#2d3748"/>
-                                                    <TextBlock Text="Coffee • Today, 9:15 AM" 
-                                                              FontSize="13" Foreground="#718096"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <TextBlock Grid.Column="1" Text="-£4.50" 
-                                                      FontSize="16" FontWeight="SemiBold" 
-                                                      Foreground="#f56565"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <!-- Uber -->
-                                    <Border Padding="15" BorderThickness="0,0,0,1" 
-                                            BorderBrush="#e2e8f0" Cursor="Hand">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Background="#e9d8fd" Width="45" 
-                                                        Height="45" CornerRadius="12">
-                                                    <TextBlock Text="🚕" FontSize="20" 
-                                                              HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                                </Border>
-                                                <StackPanel Margin="15,0,0,0">
-                                                    <TextBlock Text="Uber" FontSize="15" 
-                                                              FontWeight="SemiBold" 
-                                                              Foreground="#2d3748"/>
-                                                    <TextBlock Text="Transport • Yesterday, 6:30 PM" 
-                                                              FontSize="13" Foreground="#718096"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <TextBlock Grid.Column="1" Text="-£12.30" 
-                                                      FontSize="16" FontWeight="SemiBold" 
-                                                      Foreground="#f56565"/>
-                                        </Grid>
-                                    </Border>
-
-                                    <!-- Salary -->
-                                    <Border Padding="15" BorderThickness="0,0,0,1" 
-                                            BorderBrush="#e2e8f0" Cursor="Hand">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Border Background="#c6f6d5" Width="45" 
-                                                        Height="45" CornerRadius="12">
-                                                    <TextBlock Text="💼" FontSize="20" 
-                                                              HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                                </Border>
-                                                <StackPanel Margin="15,0,0,0">
-                                                    <TextBlock Text="Monthly Salary" FontSize="15" 
-                                                              FontWeight="SemiBold" 
-                                                              Foreground="#2d3748"/>
-                                                    <TextBlock Text="Income • Oct 1, 2025" 
-                                                              FontSize="13" Foreground="#718096"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                            <TextBlock Grid.Column="1" Text="+£3,200.00" 
-                                                      FontSize="16" FontWeight="SemiBold" 
-                                                      Foreground="#48bb78"/>
-                                        </Grid>
-                                    </Border>
-
+                                <StackPanel x:Name="TransactionsPanel">
+                                    <!-- Transactions will be loaded here from database -->
+                                    <TextBlock Text="Loading transactions from database..." 
+                                              Foreground="#718096" FontSize="14" 
+                                              HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center" 
+                                              Margin="0,20,0,20"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
